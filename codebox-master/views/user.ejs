@@ -1,0 +1,60 @@
+<% layout('./layouts/boilerplate.ejs') -%>
+<link rel="stylesheet" href="/styles/user.styles.css">
+
+<div class="user-page" data-userid="<%= user._id  %>" data-state = "<%= isInProduction  %>">
+  <div class="user-profile">
+    <div class="user-image"><span class="iconify" id="user-img" data-icon="gg:profile" data-inline="false"></span></div>
+    <div class="user-username"><%= user.username  %></div>
+    <div class="user-project-count"> <%= user.projects.length + user.webProjects.length%> <%= user.projects.length == 1? 'Project':'Projects'  %>
+    </div>
+    <div class="create-btns">
+      <a href="/cpeditor" class="my-btn2">CP</a>
+      <a href="/webeditor" class="my-btn2">WEB</a>
+      <!-- <div class="my-btn2"><a href="/cpeditor">CP</a></div>
+      <div class="my-btn2"><a href="/webeditor">WEB</a></div> -->
+    </div>
+    <form action="/logout" method="GET">
+      <button class="user-logout-btn my-gradient my-btn">LOGOUT</button>
+    </form>
+  </div>
+  <div class="user-projects">
+    <div class="projects-section">
+      <div class="search-projects"><input type="text" placeholder="search projects" name="" id="search-input"></div>
+      <div class="projects">
+        <% if(1==1){ %>
+        <% for(let project of user.projects){ %>
+          <!-- <h1><%= project.title  %> </h1> -->
+        <div class="project-container">
+          <div class="project-info">
+            <span class="iconify project-icon" data-inline="false" data-name="<%= project.language %>"></span>
+            <div class="project-title"><%= project.title  %></div>
+          </div>
+          <div class="project-options">
+            <a href="/cpeditor/<%= project._id  %>" class="view-project-btn">VIEW</a>
+            <div class="delete-project-btn" data-projectid = "<%= project._id  %>">DELETE</div>
+          </div>
+        </div>
+        <% } %>
+        <% for(let project of user.webProjects){ %>
+          <!-- <h1><%= project.title  %> </h1> -->
+        <div class="project-container">
+          <div class="project-info">
+            <span class="iconify project-icon-web" data-icon="foundation:web" data-inline="false"></span>
+            <!-- <span class="iconify project-icon" data-inline="false" data-name="<%= project.language %>"></span> -->
+            <div class="project-title"><%= project.title  %></div>
+          </div>
+          <div class="project-options">
+            <a href="/webeditor/<%= project._id  %>" class="view-project-btn">VIEW</a>
+            <div class="delete-project-btn" data-projectid = "<%= project._id  %>">DELETE</div>
+          </div>
+        </div>
+        <% } %>
+        <% } %>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/scripts/iconmap.js"></script>
+<script src="/scripts/user.script.js"></script>
